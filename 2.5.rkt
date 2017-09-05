@@ -1,0 +1,11 @@
+(define (cons_num a b)
+  (* (expt 2 a) (expt 3 b)))
+(define (div x n)
+  (if (= (modulo x n) 0) (+ 1 (div (/ x n) n)) 0))
+(define (car_num p) (div p 2))
+(define (cdr_num p) (div p 3))
+
+(display (car_num (cons_num 2 5)))
+(newline)
+(display (cdr_num (cons_num 2 5)))
+(newline)
