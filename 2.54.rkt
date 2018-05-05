@@ -1,0 +1,22 @@
+(use gauche.test)
+
+(define (equal-? a b)
+  (cond
+    ((or (null? a) (null? b))
+     (and (null? a) (null? b)))
+    ((and (pair? (car a)) (pair? (car b)))
+     (and (equal-? (car a) (car b)) (equal-? (cdr a) (cdr b))))
+    ((and (not (pair? (car a))) (not (pair? (car b))))
+     (if (eq? (car a) (car b)) (equal-? (cdr a) (cdr b)) #f))
+    (else #f)))
+
+(test* "" (equal? '() '()) (equal-? '() '()))
+(test* "" (equal? '(a) '()) (equal-? '(a) '()))
+(test* "" (equal? '() '(a)) (equal-? '() '(a)))
+(test* "" (equal? '(a) '(a)) (equal-? '(a) '(a)))
+(test* "" (equal? '(a b) '(a)) (equal-? '(a b) '(a)))
+(test* "" (equal? '(a b) '(a b)) (equal-? '(a b) '(a b)))
+(test* "" (equal? '(a b (a)) '(a b a)) (equal-? '(a b (a)) '(a b a)))
+(test* "" (equal? '(a b (a b)) '(a b (a b))) (equal-? '(a b (a b)) '(a b (a b))))
+(test* "" (equal? '(((a))) '((a))) (equal-? '(((a))) '((a))))
+(test* "" (equal? '((a)) '((a))) (equal-? '((a)) '((a))))
